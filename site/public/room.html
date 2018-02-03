@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>DJLive</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -10,19 +10,90 @@
   <script src="client.js"></script>
 </head>
 <style>
+  .buttonListen{
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    bottom: 10px;
+    margin-left:30px;
+        border-radius:20;
 
+  }
+  .buttonDJ{
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 5px;
+    width:70;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-bottom:10px;
+    margin-left:50px;
+    border-radius:20;
+  }
+
+  .DJRoom{
+  float:left;
+  width:200px;
+  height:250px;
+  background-color:black;
+  margin-left: 15px;
+  }
+  .userImg{
+  height:100px;
+  width:100px;
+  margin-left:50px;
+  margin-right:50px;
+  margin-top:10px;
+  }
+  .words{
+  color:white;
+  text-align:center;
+  margin-top:10px;
+  margin-bottom:40px;
+  }
 </style>
 <body style="background-color:gray">
 <header style="background-color:black">
-  <h2 style="margin: 15px ;color:white;">SpotifyLiveDJ</h2>
+  <h2 style="margin: 15px ;color:white;">SpotifyDJLive</h2>
 </header>
 <nav>
 
 </nav>
 <section style = "min-width: 300px;">
-  <div style = "float:left;width:200px;height:250px;background-color:black;margin-left: 15px;"><img style = "height:100px;width:100px;margin-left:50px;margin-top:10px;" src="user.png"><p></p></div>
-  <div style = "float:left;width:200px;height:250px;background-color:black;margin-left: 15px;"><img style = "height:100px;width:100px;margin-left:50px;margin-top:10px;" src="user.png"><p></p></div>
-  <div style = "float:left;width:200px;height:250px;background-color:black;margin-left: 15px;"><img style = "height:100px;width:100px;margin-left:50px;margin-top:10px;" src="user.png"><p></p></div>
+  <div class = "DJRoom">
+    <img class = "userImg" src="user.png">
+    <p class = "words">
+      DJ Name <br>
+      Line B
+    </p>
+    <button class = "buttonListen"> Listen </button><button class = "buttonDJ">  DJ  </button>
+  </div>
+
+  <div class = "DJRoom">
+    <img class = "userImg" src="user.png">
+    <p class = "words">
+      DJ Name <br>
+      Line B
+    </p>
+    <button class = "buttonListen"> Listen </button><button class = "buttonDJ">  DJ  </button>
+  </div>
+
+  <div class = "DJRoom">
+    <img class = "userImg" src="user.png">
+    <p class = "words">
+      DJ Name <br>
+      Line B
+    </p>
+    <button class = "buttonListen"> Listen </button><button class = "buttonDJ">  DJ  </button>
+  </div>
 </section>
 <div style = "float:right;" >
   <iframe src="https://open.spotify.com/embed?uri=spotify:user:spotify:playlist:3rgsDhGHZxZ9sB9DQWQfuf" width="300" height="500" frameborder="0" allowtransparency="true"></iframe>
@@ -30,4 +101,4 @@
 
 
 </body>
-</html> 
+</html>
