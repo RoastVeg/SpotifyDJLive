@@ -1,9 +1,14 @@
 var app = require('./app.js');
 var express = require('express');
 var path = require('path');
+var qs = require('query-string');
 
 var expressApp = express();
 
+expressApp.use(function (req, res, next) {
+    console.log(req.url);
+    next();
+});
 expressApp.use(express.static(path.join(__dirname, 'public/')))
 
 expressApp.get('/login', app.login);
