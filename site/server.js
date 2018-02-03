@@ -9,7 +9,7 @@ expressApp.use(express.static(path.join(__dirname, 'public/')))
 expressApp.get('/login', app.login);
 expressApp.get('/login-callback', app.loginCallback);
 expressApp.get('/room', app.room);
-expressApp.get('/dj', app.dj);
-expressApp.get('/listen', app.listen);
+expressApp.post('/dj', app.dj);
+expressApp.post('/listen', app.listen);
 
 expressApp.listen(8080);

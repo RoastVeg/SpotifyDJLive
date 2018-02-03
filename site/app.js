@@ -27,6 +27,8 @@ function randomString(length) {
 }
 
 function login(req, resp) {
+    console.log(req.url);
+
     const state = randomString(16);
 
     resp.redirect('https://accounts.spotify.com/authorize?' + querystring.stringify({
@@ -39,6 +41,8 @@ function login(req, resp) {
 }
 
 function loginCallback(req, resp) {
+    console.log(req.url);
+
     const authOptions = {
         url:  'https://accounts.spotify.com/api/token',
         form: {
@@ -61,16 +65,22 @@ function loginCallback(req, resp) {
 }
 
 function room(req, resp) {
+    console.log(req.url);
+
     resp.write('<p>Welcome to the room!<p>');
     resp.end();
 }
 
 function dj(req, resp) {
+    console.log(req.url);    
+
     resp.write('<p>Hello, DJ!</p>');
     resp.end();
 }
 
 function listen(req, resp) {
+    console.log(req.url);    
+
     resp.write('<p>Hello, listener!</p>');
     resp.end();
 }
