@@ -114,10 +114,8 @@ function listen(req, resp) {
                 json: true
             };
             
-            console.log(seekOptions);
-
             request.put(seekOptions, function(seek_error, seek_response, seek_body) {
-                console.log(seek_response);
+
             });
         });
     });
