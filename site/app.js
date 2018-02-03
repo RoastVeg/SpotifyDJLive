@@ -1,12 +1,14 @@
+var async = require('async');
 var querystring = require('querystring');
 var request     = require('request');
 
 const SPOTIFY_CLIENT_ID = '33148af9475e489393ea51a5221dc6dd';
 const SPOTIFY_CLIENT_SECRET = 'ad6063329f8046df9709f8ca6c87f791';
 const SPOTIFY_REDIRECT_URI = 'http://localhost:8080/login-callback';
-const SPOTIFY_SCOPE = '';
+const SPOTIFY_SCOPE = 'user-read-playback-state user-modify-playback-state';
 
 var spotify_tokens = { };
+var dj_info = {};
 
 module.exports = {
     login,
@@ -27,8 +29,6 @@ function randomString(length) {
 }
 
 function login(req, resp) {
-    console.log(req.url);
-
     const state = randomString(16);
 
     resp.redirect('https://accounts.spotify.com/authorize?' + querystring.stringify({
@@ -41,8 +41,6 @@ function login(req, resp) {
 }
 
 function loginCallback(req, resp) {
-    console.log(req.url);
-
     const authOptions = {
         url:  'https://accounts.spotify.com/api/token',
         form: {
@@ -57,30 +55,80 @@ function loginCallback(req, resp) {
     };
 
     request.post(authOptions, function(error, respTokens, body) {
-        spotify_tokens.access_token = body.access_token;
-        spotify_tokens.refresh_token = body.refresh_token;
-
+        resp.cookie('access_token', body.access_token);
         resp.redirect('/room');
     });
 }
 
 function room(req, resp) {
-    console.log(req.url);
-
-    resp.write('<p>Welcome to the room!<p>');
+    resp.write('<script src="client.js"></script>><p>Welcome to the room!<p>');
     resp.end();
 }
 
 function dj(req, resp) {
-    console.log(req.url);    
+    const options = {
+        url: 'https://api.spotify.com/v1/me/player',
+        headers: {
+            'Authorization': 'Bearer ' + req.query.access_token,
+        },
+    };
 
-    resp.write('<p>Hello, DJ!</p>');
+    request.get(options, function(error, response, body){
+        dj_info = JSON.parse(body);
+    });
+
+    resp.sendStatus(200);
     resp.end();
 }
 
 function listen(req, resp) {
-    console.log(req.url);    
+    const playOptions = {
+        url: 'https://api.spotify.com/v1/me/player/play',
+        headers: {
+            'Authorization': 'Bearer ' + req.query.access_token,
+        },
+        body: {
+            'uris': [dj_info['item']['uri']],
+        },
+        json: true
+    };
 
-    resp.write('<p>Hello, listener!</p>');
+    const playerOptions = {
+        url: 'https://api.spotify.com/v1/me/player',
+        headers: {
+            'Authorization': 'Bearer ' + req.query.access_token,
+        },
+    };
+
+    console.log("Position: " + dj_info['progress_ms']);
+
+    request.put(playOptions, function(play_error, play_response, play_body) {
+        request.get(playerOptions, function(player_error, player_response, player_body) {
+            
+            console.log(player_body);
+
+            const seekOptions = {
+                url: 'https://api.spotify.com/v1/me/player/',
+                headers: {
+                    'Authorization': 'Bearer ' + req.query.access_token,
+                },
+                form: {
+                    device_id: player_body['device']['id'],
+                },
+                body: {
+                    'position_ms': dj_info['progress_ms'],
+                },
+                json: true
+            };
+            
+            request.put(seekOptions, function(seek_error, seek_response, seek_body) {
+                console.log(seek_response);
+            });
+        });
+    });
+
+    // console.log(1);
+    // });
+
     resp.end();
 }

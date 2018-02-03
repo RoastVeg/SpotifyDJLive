@@ -18,14 +18,14 @@ function getCookie(cname) {
 }
 
 function listenSync() {
-    http.open("POST", "listen");
-    http.send(access_token);
+    http.open("POST", "listen?access_token=" + access_token);
+    http.send();
     http.onload = () => console.log("beep");
 }
 
 function djSync() {
-    http.open("POST", "dj");
-    http.send(access_token);
+    http.open("POST", "dj?access_token=" + access_token);
+    http.send();
     http.onload = () => console.log("boop");
 }
 
