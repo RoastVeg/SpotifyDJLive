@@ -97,29 +97,25 @@ function listen(req, resp) {
         headers: {
             'Authorization': 'Bearer ' + req.query.access_token,
         },
+        json: true,
     };
-
-    console.log("Position: " + dj_info['progress_ms']);
 
     request.put(playOptions, function(play_error, play_response, play_body) {
         request.get(playerOptions, function(player_error, player_response, player_body) {
-            
-            console.log(player_body);
-
             const seekOptions = {
-                url: 'https://api.spotify.com/v1/me/player/',
+                url: 'https://api.spotify.com/v1/me/player/seek?position_ms='+dj_info['progress_ms'],
                 headers: {
                     'Authorization': 'Bearer ' + req.query.access_token,
                 },
-                form: {
-                    device_id: player_body['device']['id'],
-                },
                 body: {
+                    'device_ids': [player_body['device']['id']],
                     'position_ms': dj_info['progress_ms'],
                 },
                 json: true
             };
             
+            console.log(seekOptions);
+
             request.put(seekOptions, function(seek_error, seek_response, seek_body) {
                 console.log(seek_response);
             });
