@@ -61,7 +61,7 @@ function loginCallback(req, resp) {
 }
 
 function room(req, resp) {
-    resp.sendFile("public/room.html", {root: __dirname});
+    resp.sendFile("views/room.html", {root: __dirname});
 }
 
 function dj(req, resp) {
