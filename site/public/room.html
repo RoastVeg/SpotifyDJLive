@@ -21,7 +21,7 @@
     font-size: 16px;
     bottom: 10px;
     margin-left:30px;
-        border-radius:20;
+        border-radius:20px;
 
   }
   .buttonDJ{
@@ -36,7 +36,7 @@
     font-size: 16px;
     margin-bottom:10px;
     margin-left:50px;
-    border-radius:20;
+    border-radius:20px;
   }
 
   .DJRoom{
@@ -44,8 +44,10 @@
   width:200px;
   height:250px;
   background-color:black;
-  margin-left: 15px;
+  margin-left:15px;
+  margin-top:15px;
   }
+
   .userImg{
   height:100px;
   width:100px;
@@ -59,46 +61,54 @@
   margin-top:10px;
   margin-bottom:40px;
   }
+
 </style>
 <body style="background-color:gray">
 <header style="background-color:black">
-  <h2 style="margin: 15px ;color:white;">SpotifyDJLive</h2>
 </header>
-<nav>
-
-</nav>
-<section style = "min-width: 300px;">
-  <div class = "DJRoom">
-    <img class = "userImg" src="user.png">
-    <p class = "words">
-      DJ Name <br>
-      Line B
-    </p>
-    <button class = "buttonListen"> Listen </button><button class = "buttonDJ">  DJ  </button>
+<div class="row">
+  <div class="col-md-8" style="background-color:black;">
+    <h2 style="margin: 15px ;color:white;">SpotifyDJLive</h2>
   </div>
 
-  <div class = "DJRoom">
-    <img class = "userImg" src="user.png">
-    <p class = "words">
-      DJ Name <br>
-      Line B
-    </p>
-    <button class = "buttonListen"> Listen </button><button class = "buttonDJ">  DJ  </button>
+  <div class="col-md-2" style="background-color:red;">
+    <h2 style="margin: 15px ;color:white;">StopTFU</h2>
   </div>
-
-  <div class = "DJRoom">
-    <img class = "userImg" src="user.png">
-    <p class = "words">
-      DJ Name <br>
-      Line B
-    </p>
-    <button class = "buttonListen"> Listen </button><button class = "buttonDJ">  DJ  </button>
+  <div class="col-md-2" style="background-color:green;">
+    <h2 style="margin: 15px ;color:white;">Logout</h2>
   </div>
-</section>
-<div style = "float:right;" >
-  <iframe src="https://open.spotify.com/embed?uri=spotify:user:spotify:playlist:3rgsDhGHZxZ9sB9DQWQfuf" width="300" height="500" frameborder="0" allowtransparency="true"></iframe>
 </div>
+<section style = "width:100%">
+  <div class = "DJRoom">
+    <img class = "userImg" src="user.png">
+    <p class = "words">
+      DJ Name <br>
+      Text
+    </p>
+    <button class = "buttonListen"> Listen </button><button class = "buttonDJ">  DJ  </button>
+  </div>
+  <div class = "DJRoom">
+    <img class = "userImg" src="user.png">
+    <p class = "words">
+      DJ Name <br>
+      Send nudes
+    </p>
+    <button class = "buttonListen"> Listen </button><button class = "buttonDJ">  DJ  </button>
+  </div>
+  <div class = "DJRoom">
+    <img class = "userImg" src="user.png">
+    <p class = "words">
+      DJ Name <br>
+      Text
+    </p>
+    <button class = "buttonListen"> Listen </button><button class = "buttonDJ">  DJ  </button>
 
+
+  </div>
+
+
+
+</section>
 
 </body>
 </html>
