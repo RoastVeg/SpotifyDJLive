@@ -1,4 +1,4 @@
-var async = require('async');
+var async       = require('async');
 var querystring = require('querystring');
 var request     = require('request');
 
@@ -73,7 +73,9 @@ function dj(req, resp) {
     };
 
     request.get(options, function(error, response, body){
-        dj_info = JSON.parse(body);
+        if (body !== '') {
+            dj_info = JSON.parse(body);
+        }
     });
 
     resp.sendStatus(200);
@@ -81,6 +83,10 @@ function dj(req, resp) {
 }
 
 function listen(req, resp) {
+    if (dj_info['item'] === undefined) {
+        return;
+    }
+
     const playOptions = {
         url: 'https://api.spotify.com/v1/me/player/play',
         headers: {
@@ -100,24 +106,67 @@ function listen(req, resp) {
         json: true,
     };
 
-    request.put(playOptions, function(play_error, play_response, play_body) {
-        request.get(playerOptions, function(player_error, player_response, player_body) {
-            const seekOptions = {
-                url: 'https://api.spotify.com/v1/me/player/seek?position_ms='+dj_info['progress_ms'],
-                headers: {
-                    'Authorization': 'Bearer ' + req.query.access_token,
-                },
-                body: {
-                    'device_ids': [player_body['device']['id']],
-                    'position_ms': dj_info['progress_ms'],
-                },
-                json: true
-            };
-            
-            request.put(seekOptions, function(seek_error, seek_response, seek_body) {
+    request.get(playerOptions, function(player_error, player_response, player_body) {
+        if (player_body === '' || player_body === undefined) {
+            return ;
+        }
 
+        const seekOptions = {
+            url: 'https://api.spotify.com/v1/me/player/seek?position_ms=' + dj_info['progress_ms'],
+            headers: {
+                'Authorization': 'Bearer ' + req.query.access_token,
+            },
+            body: {
+                'device_ids': [player_body['device']['id']],
+                'position_ms': dj_info['progress_ms'],
+            },
+            json: true
+        }; 
+
+        // Pause/Play with the DJ
+        if (player_body['is_playing'] !== dj_info['is_playing']) {
+
+            // DJ is paused
+            if (dj_info['is_playing'] === false) {
+                const pauseOptions = {
+                    url: 'https://api.spotify.com/v1/me/player/pause',
+                    headers: {
+                        'Authorization': 'Bearer ' + req.query.access_token,
+                    },
+                    body: {
+                        'device_ids': [player_body['device']['id']],
+                    },
+                    json: true,
+                };
+
+                request.put(pauseOptions, (error, response, body) => {
+                    request.put(seekOptions);
+                    return;
+                });
+            }
+
+            // DJ is playing
+            else if (dj_info['is_playing'] === true) {
+                request.put(playOptions, () => {
+                    request.put(seekOptions);
+                });
+
+                return;
+            }
+        }
+
+        const listenerProgress = player_body['progress_ms'];
+        const djProgress = dj_info['progress_ms'];
+
+        if (player_body['item']['uri'] !== dj_info['item']['uri']) {
+            request.put(playOptions, () => {
+                request.put(seekOptions);
             });
-        });
+        } else {
+            if (Math.abs(listenerProgress - djProgress) >= 10000) {
+                request.put(seekOptions);
+            }
+        }
     });
 
     resp.end();
