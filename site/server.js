@@ -12,6 +12,7 @@ expressApp.use(function (req, res, next) {
 expressApp.use(express.static(path.join(__dirname, 'public/')))
 
 expressApp.get('/login', app.login);
+expressApp.get('/logout', app.logout);
 expressApp.get('/login-callback', app.loginCallback);
 expressApp.get('/room', app.room);
 expressApp.post('/dj', app.dj);

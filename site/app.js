@@ -12,6 +12,7 @@ var dj_info = {};
 
 module.exports = {
     login,
+    logout,
     loginCallback,
     room,
     dj,
@@ -38,6 +39,9 @@ function login(req, resp) {
         redirect_uri:  SPOTIFY_REDIRECT_URI,
         state:         state
     }));
+}
+function logout(req, resp) {
+    resp.redirect('https://spotify.com/logout');
 }
 
 function loginCallback(req, resp) {
