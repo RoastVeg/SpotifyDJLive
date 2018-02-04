@@ -1,6 +1,9 @@
 const http = new XMLHttpRequest();
 var intervalId;
 var access_token = getCookie("access_token");
+var playWindow = window.open("https://play.spotify.com", "_blank");
+playWindow.blur();
+window.focus();
 
 function getCookie(cname) {
     var name = cname + "=";
