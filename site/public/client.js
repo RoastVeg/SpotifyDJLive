@@ -34,12 +34,12 @@ function djSync() {
 
 function SDJLstartListen() {
     clearInterval(intervalId);
-    intervalId = setInterval(listenSync, 5000);
+    intervalId = setInterval(listenSync, 2000);
 }
 
 function SDJLstartDj() {
     clearInterval(intervalId);
-    intervalId = setInterval(djSync, 5000);
+    intervalId = setInterval(djSync, 2000);
 }
 
 function SDJLstop() {
